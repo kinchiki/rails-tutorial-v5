@@ -9,6 +9,7 @@ class User < ApplicationRecord
                     uniqueness: { case_sensitive: false }
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
   has_secure_password
+  PASSWORD_RESET_EXPIRED_TIME = 30.minutes
 
   # 渡された文字列のハッシュ値を返す
   def User.digest(string)
@@ -60,6 +61,11 @@ class User < ApplicationRecord
   # パスワード再設定のメールを送信する
   def send_password_reset_email
     UserMailer.password_reset(self).deliver_now
+  end
+
+  # パスワード再設定の期限が切れている場合はtrueを返す
+  def password_reset_expired?
+    reset_sent_at < PASSWORD_RESET_EXPIRED_TIME.ago
   end
 
   private
