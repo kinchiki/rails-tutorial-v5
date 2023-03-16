@@ -70,6 +70,10 @@ class User < ApplicationRecord
     reset_sent_at < PASSWORD_RESET_EXPIRED_TIME.ago
   end
 
+  def feed
+    Micropost.where("user_id = ?", id)
+  end
+
   private
 
   # メールアドレスをすべて小文字にする
