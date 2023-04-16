@@ -99,14 +99,14 @@ class User < ApplicationRecord
 
   private
 
-  # メールアドレスをすべて小文字にする
-  def downcase_email
-    self.email.downcase!
-  end
+    # メールアドレスをすべて小文字にする
+    def downcase_email
+      self.email.downcase!
+    end
 
-  # 有効化トークンとダイジェストを作成および代入する
-  def create_acticvation_digest
-    self.activation_token  = User.new_token
-    self.activation_digest = User.digest(activation_token)
-  end
+    # 有効化トークンとダイジェストを作成および代入する
+    def create_acticvation_digest
+      self.activation_token  = User.new_token
+      self.activation_digest = User.digest(activation_token)
+    end
 end
